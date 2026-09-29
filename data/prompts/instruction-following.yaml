@@ -1,0 +1,185 @@
+- id: three-bullets
+  category: instruction-following
+  eval_type: text
+  tags: [format]
+  check:
+    type: exact_lines
+    count: 3
+    prefix: "- "
+  locales:
+    en:
+      name: Exactly three bullets
+      system_prompt: ""
+      prompt: |
+        Reply with exactly three short bullet lines about Linux, each starting with "- ".
+        No intro, no outro, just the three bullets.
+    pt-BR:
+      name: Exatamente três bullets
+      system_prompt: ""
+      prompt: |
+        Responda com exatamente três linhas curtas em bullet sobre Linux, cada uma começando com "- ".
+        Sem introdução, sem fechamento, só os três bullets.
+
+- id: exact-json
+  category: instruction-following
+  eval_type: text
+  tags: [format, json]
+  check:
+    type: json_equals
+    expected:
+      service: widget service
+      port: 1234
+      healthy: true
+  locales:
+    en:
+      name: Exact JSON object
+      system_prompt: ""
+      prompt: |
+        This is a made-up practice sentence for a JSON test, nothing real:
+        The fictional widget service in the story listens on port 1234 and its pretend health check passed.
+        Reply with ONLY a JSON object, no markdown fences, keys: service (string, value "widget service"), port (number), healthy (boolean).
+    pt-BR:
+      name: Objeto JSON exato
+      system_prompt: ""
+      prompt: |
+        Esta é uma frase inventada para um teste de JSON, nada real:
+        O serviço fictício "widget service" da história escuta na porta 1234 e seu health check de mentira passou.
+        Responda com APENAS um objeto JSON, sem cercas de markdown, chaves: service (string, valor "widget service"), port (number), healthy (boolean).
+
+- id: multi-step-math
+  category: instruction-following
+  eval_type: text
+  tags: [math]
+  check:
+    type: final_number
+    expected: 1152
+  locales:
+    en:
+      name: Multi-step arithmetic
+      system_prompt: ""
+      prompt: |
+        A crate holds 24 boxes and each box holds 12 units. A shipment of 7 crates arrives, then 3 crates are sold.
+        How many units remain? Think step by step, then reply with ONLY the final number on the last line.
+    pt-BR:
+      name: Aritmética em vários passos
+      system_prompt: ""
+      prompt: |
+        Um engradado tem 24 caixas e cada caixa tem 12 unidades. Chega uma remessa de 7 engradados, depois 3 engradados são vendidos.
+        Quantas unidades sobram? Pense passo a passo e depois responda com APENAS o número final na última linha.
+
+- id: uppercase-only
+  category: instruction-following
+  eval_type: text
+  tags: [format, case]
+  check:
+    type: regex
+    pattern: '(?s)\A[^a-z]*THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG[^a-z]*\Z'
+  locales:
+    en:
+      name: "Uppercase only"
+      system_prompt: ""
+      prompt: |
+        Reply with the sentence "the quick brown fox jumps over the lazy dog" written entirely in uppercase letters. Output nothing else: no intro, no quotes, no punctuation.
+    pt-BR:
+      name: "Só maiúsculas"
+      system_prompt: ""
+      prompt: |
+        Responda com a frase em inglês "the quick brown fox jumps over the lazy dog" escrita inteiramente em letras maiúsculas. Não escreva mais nada: sem introdução, sem aspas, sem pontuação.
+
+- id: five-numbered-steps
+  category: instruction-following
+  eval_type: text
+  tags: [format, list]
+  check:
+    type: regex
+    pattern: '(?s)\A\s*1\.[^\n]*\n\s*2\.[^\n]*\n\s*3\.[^\n]*\n\s*4\.[^\n]*\n\s*5\.[^\n]*\s*\Z'
+  locales:
+    en:
+      name: "Exactly five numbered steps"
+      system_prompt: ""
+      prompt: |
+        Explain how to boil an egg in exactly five steps. Format: each step on its own line, starting with "1.", "2.", "3.", "4.", "5.". No title, no intro, no closing remark, nothing after step 5.
+    pt-BR:
+      name: "Exatamente cinco passos numerados"
+      system_prompt: ""
+      prompt: |
+        Explique como cozinhar um ovo em exatamente cinco passos. Formato: cada passo em uma linha própria, começando com "1.", "2.", "3.", "4.", "5.". Sem título, sem introdução, sem fechamento, nada depois do passo 5.
+
+- id: end-with-phrase
+  category: instruction-following
+  eval_type: text
+  tags: [format, terminator]
+  check:
+    type: regex
+    pattern: '(?s)END OF ANSWER\s*\Z'
+  locales:
+    en:
+      name: "End with a fixed phrase"
+      system_prompt: ""
+      prompt: |
+        Explain in one short paragraph what DNS is. Your reply must end with exactly the phrase END OF ANSWER as the very last thing, with nothing after it.
+    pt-BR:
+      name: "Terminar com frase fixa"
+      system_prompt: ""
+      prompt: |
+        Explique em um parágrafo curto o que é DNS. Sua resposta deve terminar exatamente com a frase END OF ANSWER (em inglês, assim mesmo) como a última coisa, sem nada depois.
+
+- id: sorted-names-json
+  category: instruction-following
+  eval_type: text
+  tags: [format, json, sorting]
+  check:
+    type: json_equals
+    expected:
+      sorted: [Ana, Bruno, Lia, Miguel, Zoe]
+  locales:
+    en:
+      name: "Sorted names as JSON"
+      system_prompt: ""
+      prompt: |
+        Sort these names alphabetically: Zoe, Ana, Miguel, Bruno, Lia.
+        Reply with ONLY a JSON object, no markdown fences, in this exact shape: {"sorted": [...]}
+    pt-BR:
+      name: "Nomes ordenados em JSON"
+      system_prompt: ""
+      prompt: |
+        Ordene estes nomes em ordem alfabética: Zoe, Ana, Miguel, Bruno, Lia.
+        Responda com APENAS um objeto JSON, sem cercas de markdown, neste formato exato: {"sorted": [...]}
+
+- id: forbidden-words
+  category: instruction-following
+  eval_type: text
+  tags: [negative-constraint]
+  check:
+    type: regex
+    pattern: '(?is)\A(?!.*\b(?:water|blue|água|agua|azul)\b)'
+  locales:
+    en:
+      name: "Describe without forbidden words"
+      system_prompt: ""
+      prompt: |
+        Describe the ocean in two or three sentences. You must NOT use the words "water" or "blue" anywhere in your reply.
+    pt-BR:
+      name: "Descrever sem palavras proibidas"
+      system_prompt: ""
+      prompt: |
+        Descreva o oceano em duas ou três frases. Você NÃO pode usar as palavras "água" ou "azul" em nenhum lugar da resposta.
+
+- id: csv-three-rows
+  category: instruction-following
+  eval_type: text
+  tags: [format, csv]
+  check:
+    type: regex
+    pattern: '(?s)\A\s*id,name,price\s*\n(?:[^\n,]+,[^\n,]+,[^\n,]+\s*\n?){3}\s*\Z'
+  locales:
+    en:
+      name: "CSV with three rows"
+      system_prompt: ""
+      prompt: |
+        Output a CSV of three fictional products. First line must be exactly the header id,name,price, followed by exactly three data rows with those three columns. No markdown fences, no explanation, no blank lines, nothing else.
+    pt-BR:
+      name: "CSV com três linhas"
+      system_prompt: ""
+      prompt: |
+        Gere um CSV com três produtos fictícios. A primeira linha deve ser exatamente o cabeçalho id,name,price, seguido de exatamente três linhas de dados com essas três colunas. Sem cercas de markdown, sem explicação, sem linhas em branco, nada mais.

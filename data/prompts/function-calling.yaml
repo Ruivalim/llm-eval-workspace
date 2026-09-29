@@ -1,0 +1,98 @@
+- id: weather-and-math
+  category: function-calling
+  eval_type: tool_call
+  tools: [get_weather, calculate_math]
+  check:
+    type: tool_called
+    tools: [get_weather, calculate_math]
+    final_contains: ["55212"]
+  locales:
+    en:
+      name: Weather and Math
+      system_prompt: You are a helpful assistant with access to external tools (get_weather, calculate_math). Whenever you need real-world information or complex calculations, use the tools before giving your final answer to the user.
+      prompt: |
+        What is the weather forecast for Curitiba today? And since we're talking about numbers, please tell me exactly what 1284 multiplied by 43 is.
+    pt-BR:
+      name: Previsão do Tempo e Cálculo
+      system_prompt: Você é um assistente útil com acesso a ferramentas externas (get_weather, calculate_math). Sempre que precisar de informações do mundo real ou cálculos complexos, use as ferramentas antes de dar a resposta final ao usuário.
+      prompt: |
+        Qual é a previsão do tempo para Curitiba hoje? E já que estamos falando de números, me diga quanto é exatamente 1284 multiplicado por 43.
+
+- id: url-summary
+  category: function-calling
+  eval_type: tool_call
+  tools: [fetch_webpage_content]
+  check:
+    type: tool_called
+    tools: [fetch_webpage_content]
+  locales:
+    en:
+      name: URL Summary
+      system_prompt: You have access to the 'fetch_webpage_content' tool.
+      prompt: |
+        Please access the website 'https://en.wikipedia.org/wiki/Large_language_model' and give me a summary of 3 main points about what is written there.
+    pt-BR:
+      name: Resumo de URL
+      system_prompt: Você tem acesso à ferramenta 'fetch_webpage_content'.
+      prompt: |
+        Por favor, acesse o site 'https://en.wikipedia.org/wiki/Large_language_model' e me dê um resumo de 3 pontos principais sobre o que está escrito lá.
+
+- id: math-chain
+  category: function-calling
+  eval_type: tool_call
+  tools: [calculate_math]
+  check:
+    type: tool_called
+    tools: [calculate_math]
+    final_contains: ["403"]
+  locales:
+    en:
+      name: Chained Calculation
+      system_prompt: You are a precise assistant with access to the calculate_math tool. Never do arithmetic in your head; always use the tool, then report the result.
+      prompt: |
+        Please compute (17 * 23) + (144 / 12) and tell me the exact result.
+    pt-BR:
+      name: Cálculo Encadeado
+      system_prompt: Você é um assistente preciso com acesso à ferramenta calculate_math. Nunca faça contas de cabeça; sempre use a ferramenta e depois informe o resultado.
+      prompt: |
+        Por favor, calcule (17 * 23) + (144 / 12) e me diga o resultado exato.
+
+- id: weather-two-cities
+  category: function-calling
+  eval_type: tool_call
+  tools: [get_weather]
+  check:
+    type: tool_called
+    tools: [get_weather]
+    final_contains: ["18"]
+  locales:
+    en:
+      name: Weather in Two Cities
+      system_prompt: You are a travel assistant with access to the get_weather tool. Use it for every city the user asks about before answering.
+      prompt: |
+        I'm deciding between São Paulo and Porto Alegre for the weekend. What's the weather like in each one right now? Include the temperature in Celsius for both.
+    pt-BR:
+      name: Tempo em Duas Cidades
+      system_prompt: Você é um assistente de viagens com acesso à ferramenta get_weather. Use-a para cada cidade que o usuário perguntar antes de responder.
+      prompt: |
+        Estou decidindo entre São Paulo e Porto Alegre para o fim de semana. Como está o tempo em cada uma agora? Inclua a temperatura em Celsius das duas.
+
+- id: fetch-then-calculate
+  category: function-calling
+  eval_type: tool_call
+  tools: [fetch_webpage_content, calculate_math]
+  check:
+    type: tool_called
+    tools: [fetch_webpage_content, calculate_math]
+    final_contains: ["1024"]
+  locales:
+    en:
+      name: Fetch Then Calculate
+      system_prompt: You are an assistant with access to the tools fetch_webpage_content and calculate_math. Use the right tool for each part of the request before answering.
+      prompt: |
+        First, open 'https://en.wikipedia.org/wiki/Large_language_model' and tell me in one sentence what architecture LLMs are built on. Then, using the calculator, tell me exactly what 2 raised to the power of 10 is.
+    pt-BR:
+      name: Buscar e Depois Calcular
+      system_prompt: Você é um assistente com acesso às ferramentas fetch_webpage_content e calculate_math. Use a ferramenta certa para cada parte do pedido antes de responder.
+      prompt: |
+        Primeiro, abra 'https://en.wikipedia.org/wiki/Large_language_model' e me diga em uma frase em qual arquitetura os LLMs são construídos. Depois, usando a calculadora, me diga exatamente quanto é 2 elevado a 10.

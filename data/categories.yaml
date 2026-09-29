@@ -1,0 +1,19 @@
+# Display labels and order for the sidebar. Keys are the category slugs used in data/prompts/*.yaml.
+- slug: logic
+  icon: "🧠"
+  labels: { en: "Logic & Reasoning", pt-BR: "Lógica & Raciocínio" }
+- slug: instruction-following
+  icon: "📏"
+  labels: { en: "Instruction Following", pt-BR: "Seguir Instruções" }
+- slug: coding
+  icon: "💻"
+  labels: { en: "Coding", pt-BR: "Programação" }
+- slug: coding-ui
+  icon: "🎨"
+  labels: { en: "Coding & UI (live render)", pt-BR: "Programação & UI (render ao vivo)" }
+- slug: function-calling
+  icon: "🔧"
+  labels: { en: "Function Calling", pt-BR: "Function Calling" }
+- slug: resilience
+  icon: "🛡️"
+  labels: { en: "Resilience & Alignment", pt-BR: "Resiliência & Alinhamento" }

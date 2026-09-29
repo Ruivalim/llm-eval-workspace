@@ -1,0 +1,296 @@
+- id: fix-off-by-one
+  category: coding
+  eval_type: text
+  tags: [javascript, bugfix]
+  check:
+    type: js_harness
+    must_not_contain: ["items[i + 1]"]
+    must_match: ["function\\s+total"]
+    harness: |
+      if (total([1,2,3]) !== 6) throw new Error("total([1,2,3]) != 6");
+      if (total([]) !== 0) throw new Error("total([]) != 0");
+  locales:
+    en:
+      name: Fix the off-by-one bug
+      system_prompt: ""
+      prompt: |
+        Fix the bug in this JavaScript function. Reply with only the fixed code, no explanation:
+
+        function total(items) {
+          let s = 0;
+          for (let i = 0; i < items.length; i++) {
+            s += items[i + 1];
+          }
+          return s;
+        }
+    pt-BR:
+      name: Corrige o bug de off-by-one
+      system_prompt: ""
+      prompt: |
+        Corrija o bug nesta função JavaScript. Responda só com o código corrigido, sem explicação:
+
+        function total(items) {
+          let s = 0;
+          for (let i = 0; i < items.length; i++) {
+            s += items[i + 1];
+          }
+          return s;
+        }
+
+- id: refactor-to-reduce
+  category: coding
+  eval_type: text
+  tags: [javascript, refactor]
+  check:
+    type: js_harness
+    must_not_contain: ["for ("]
+    must_match: ["function\\s+total", "reduce"]
+    harness: |
+      if (total([1,2,3]) !== 6) throw new Error("total([1,2,3]) != 6");
+      if (total([]) !== 0) throw new Error("total([]) != 0");
+  locales:
+    en:
+      name: Refactor loop to reduce
+      system_prompt: ""
+      prompt: |
+        Rewrite this JavaScript function to use Array.reduce instead of the for loop. Reply with only the code, no explanation:
+
+        function total(items) {
+          let s = 0;
+          for (let i = 0; i < items.length; i++) {
+            s += items[i];
+          }
+          return s;
+        }
+    pt-BR:
+      name: Refatora o loop para reduce
+      system_prompt: ""
+      prompt: |
+        Reescreva esta função JavaScript usando Array.reduce no lugar do loop for. Responda só com o código, sem explicação:
+
+        function total(items) {
+          let s = 0;
+          for (let i = 0; i < items.length; i++) {
+            s += items[i];
+          }
+          return s;
+        }
+
+- id: merge-ranges
+  category: coding
+  eval_type: text
+  tags: [hard, javascript, intervals]
+  check:
+    type: js_harness
+    must_match: ["function\\s+mergeRanges"]
+    harness: |
+      const input = [[5, 7], [1, 3], [3, 4], [10, 10], [9, 9]];
+      const original = JSON.stringify(input);
+      const result = mergeRanges(input);
+      if (JSON.stringify(result) !== JSON.stringify([[1, 4], [5, 7], [9, 9], [10, 10]])) throw new Error("normalization failed");
+      if (JSON.stringify(input) !== original) throw new Error("input was mutated");
+      if (JSON.stringify(mergeRanges([[1, 2], [2, 5], [8, 9]])) !== JSON.stringify([[1, 5], [8, 9]])) throw new Error("touching ranges were not merged");
+  locales:
+    en:
+      name: "Immutable range merge"
+      system_prompt: ""
+      prompt: |
+        Write JavaScript function mergeRanges(ranges). Each range is [start, end] with start <= end. Return sorted, merged ranges. Overlapping or touching ranges merge. Do not mutate the input or its nested arrays. Reply with only code.
+    pt-BR:
+      name: "Fusão imutável de intervalos"
+      system_prompt: ""
+      prompt: |
+        Escreva a função JavaScript mergeRanges(ranges). Cada intervalo é [início, fim], com início <= fim. Retorne intervalos ordenados e fundidos. Intervalos que se sobrepõem ou se encostam devem ser fundidos. Não altere a entrada nem seus arrays internos. Responda somente com código.
+
+- id: parse-quantity
+  category: coding
+  eval_type: text
+  tags: [hard, javascript, validation]
+  check:
+    type: js_harness
+    must_match: ["function\\s+parseQuantity"]
+    harness: |
+      const cases = [["1", 1], ["9999", 9999], [" 12 ", null], ["01", null], ["0", null], ["10000", null], [12, null], ["12x", null]];
+      for (const [value, expected] of cases) {
+        if (parseQuantity(value) !== expected) throw new Error(`unexpected result for ${String(value)}`);
+      }
+  locales:
+    en:
+      name: "Strict quantity parser"
+      system_prompt: ""
+      prompt: |
+        Write JavaScript function parseQuantity(value). Return a number only when value is a string containing a canonical positive base-10 integer from 1 through 9999. Otherwise return null. Canonical means no whitespace, sign, leading zero, decimal point, exponent, or non-digit characters. Reply with only code.
+    pt-BR:
+      name: "Parser estrito de quantidade"
+      system_prompt: ""
+      prompt: |
+        Escreva a função JavaScript parseQuantity(value). Retorne um número apenas quando value for uma string contendo um inteiro decimal positivo canônico de 1 a 9999. Caso contrário, retorne null. Canônico significa sem espaços, sinal, zero à esquerda, ponto decimal, expoente ou caracteres não numéricos. Responda somente com código.
+
+- id: summarize-orders
+  category: coding
+  eval_type: text
+  tags: [hard, javascript, data-transform]
+  check:
+    type: js_harness
+    must_match: ["function\\s+summarizeOrders"]
+    harness: |
+      const orders = [
+        {category: "books", quantity: 2, price: 15},
+        {category: "games", quantity: 1, price: 50},
+        {category: "books", quantity: 1, price: 20},
+        {category: "games", quantity: 3, price: 10}
+      ];
+      const got = summarizeOrders(orders);
+      const expected = [{category: "books", units: 3, revenue: 50}, {category: "games", units: 4, revenue: 80}];
+      if (JSON.stringify(got) !== JSON.stringify(expected)) throw new Error("incorrect summary");
+      if (JSON.stringify(summarizeOrders([])) !== "[]") throw new Error("empty input failed");
+  locales:
+    en:
+      name: "Order aggregation"
+      system_prompt: ""
+      prompt: |
+        Write JavaScript function summarizeOrders(orders). Each order has category, quantity, and price. Return one object per category with exactly these keys: category, units (the total quantity) and revenue (the sum of quantity * price). Sort results by category ascending. Do not mutate input. Reply with only code.
+    pt-BR:
+      name: "Agregação de pedidos"
+      system_prompt: ""
+      prompt: |
+        Escreva a função JavaScript summarizeOrders(orders). Cada pedido tem category, quantity e price. Retorne um objeto por categoria com exatamente estas chaves: category, units (o total de quantity) e revenue (a soma de quantity * price). Ordene o resultado por category em ordem crescente. Não altere a entrada. Responda somente com código.
+
+- id: fizzbuzz-function
+  category: coding
+  eval_type: text
+  tags: [javascript, basics]
+  check:
+    type: js_harness
+    must_match: ["function\\s+fizzbuzz"]
+    harness: |
+      const cases = [[15, "FizzBuzz"], [3, "Fizz"], [5, "Buzz"], [7, "7"], [30, "FizzBuzz"], [9, "Fizz"], [10, "Buzz"], [1, "1"]];
+      for (const [n, want] of cases) {
+        if (fizzbuzz(n) !== want) throw new Error(`fizzbuzz(${n}) = ${JSON.stringify(fizzbuzz(n))}, want ${JSON.stringify(want)}`);
+      }
+  locales:
+    en:
+      name: "FizzBuzz as a function"
+      system_prompt: ""
+      prompt: |
+        Write a JavaScript function fizzbuzz(n) that returns a string: "FizzBuzz" if n is divisible by 3 and 5, "Fizz" if only by 3, "Buzz" if only by 5, otherwise the number itself as a string. Reply with only the code, no explanation.
+    pt-BR:
+      name: "FizzBuzz como função"
+      system_prompt: ""
+      prompt: |
+        Escreva uma função JavaScript fizzbuzz(n) que retorna uma string: "FizzBuzz" se n é divisível por 3 e por 5, "Fizz" se só por 3, "Buzz" se só por 5, senão o próprio número como string. Responda só com o código, sem explicação.
+
+- id: palindrome-check
+  category: coding
+  eval_type: text
+  tags: [javascript, strings]
+  check:
+    type: js_harness
+    must_match: ["function\\s+isPalindrome"]
+    harness: |
+      const cases = [["A man, a plan, a canal: Panama", true], ["hello", false], ["", true], ["No 'x' in Nixon", true], ["ab", false], ["Was it a car or a cat I saw?", true], ["12321", true]];
+      for (const [s, want] of cases) {
+        if (isPalindrome(s) !== want) throw new Error(`isPalindrome(${JSON.stringify(s)}) should be ${want}`);
+      }
+  locales:
+    en:
+      name: "Palindrome ignoring punctuation"
+      system_prompt: ""
+      prompt: |
+        Write a JavaScript function isPalindrome(s) that returns true when the string reads the same forwards and backwards, ignoring case and any character that is not a letter or digit. The empty string counts as a palindrome. Reply with only the code.
+    pt-BR:
+      name: "Palíndromo ignorando pontuação"
+      system_prompt: ""
+      prompt: |
+        Escreva uma função JavaScript isPalindrome(s) que retorna true quando a string é igual lida de frente para trás e de trás para frente, ignorando maiúsculas/minúsculas e qualquer caractere que não seja letra ou dígito. String vazia conta como palíndromo. Responda só com o código.
+
+- id: flatten-deep
+  category: coding
+  eval_type: text
+  tags: [javascript, recursion]
+  check:
+    type: js_harness
+    must_match: ["function\\s+flatten"]
+    must_not_contain: [".flat("]
+    harness: |
+      const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+      if (!eq(flatten([1, [2, [3, [4, [5]]]]]), [1, 2, 3, 4, 5])) throw new Error("deep nesting");
+      if (!eq(flatten([]), [])) throw new Error("empty");
+      if (!eq(flatten([[], [[]], 1]), [1])) throw new Error("empty inner arrays");
+      if (!eq(flatten([1, 2, 3]), [1, 2, 3])) throw new Error("already flat");
+      const input = [1, [2]];
+      flatten(input);
+      if (!eq(input, [1, [2]])) throw new Error("input was mutated");
+  locales:
+    en:
+      name: "Flatten nested arrays"
+      system_prompt: ""
+      prompt: |
+        Write a JavaScript function flatten(arr) that returns a new array with all nested arrays flattened to any depth. Do not use Array.prototype.flat and do not mutate the input. Reply with only the code.
+    pt-BR:
+      name: "Achatar arrays aninhados"
+      system_prompt: ""
+      prompt: |
+        Escreva uma função JavaScript flatten(arr) que retorna um novo array com todos os arrays aninhados achatados em qualquer profundidade. Não use Array.prototype.flat e não altere a entrada. Responda só com o código.
+
+- id: fix-count-words
+  category: coding
+  eval_type: text
+  tags: [javascript, bugfix, edge-cases]
+  check:
+    type: js_harness
+    must_match: ["function\\s+countWords"]
+    harness: |
+      const cases = [["one two three", 3], ["  a  b ", 2], ["", 0], ["   ", 0], ["one", 1], ["a\tb\nc", 3]];
+      for (const [s, want] of cases) {
+        if (countWords(s) !== want) throw new Error(`countWords(${JSON.stringify(s)}) = ${countWords(s)}, want ${want}`);
+      }
+  locales:
+    en:
+      name: "Fix countWords edge cases"
+      system_prompt: ""
+      prompt: |
+        This JavaScript function is wrong for empty strings, repeated spaces, and tabs or newlines between words. Fix it so it counts words separated by any whitespace. Reply with only the fixed code:
+
+        function countWords(s) {
+          return s.split(" ").length;
+        }
+    pt-BR:
+      name: "Corrigir casos de borda de countWords"
+      system_prompt: ""
+      prompt: |
+        Esta função JavaScript erra com string vazia, espaços repetidos e tabs ou quebras de linha entre palavras. Corrija para contar palavras separadas por qualquer espaço em branco. Responda só com o código corrigido:
+
+        function countWords(s) {
+          return s.split(" ").length;
+        }
+
+- id: parse-iso-date
+  category: coding
+  eval_type: text
+  tags: [javascript, validation, parsing]
+  check:
+    type: js_harness
+    must_match: ["function\\s+parseDate"]
+    harness: |
+      const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+      if (!eq(parseDate("2024-03-07"), { year: 2024, month: 3, day: 7 })) throw new Error("valid date");
+      if (!eq(parseDate("2024-12-31"), { year: 2024, month: 12, day: 31 })) throw new Error("end of year");
+      if (parseDate("2024-13-01") !== null) throw new Error("month 13 accepted");
+      if (parseDate("2024-02-30") !== null) throw new Error("Feb 30 accepted");
+      if (parseDate("2023-02-29") !== null) throw new Error("Feb 29 on a non-leap year accepted");
+      if (!eq(parseDate("2024-02-29"), { year: 2024, month: 2, day: 29 })) throw new Error("leap day rejected");
+      if (parseDate("24-03-07") !== null) throw new Error("two-digit year accepted");
+      if (parseDate("2024-3-7") !== null) throw new Error("unpadded month accepted");
+      if (parseDate("2024-03-07T00:00") !== null) throw new Error("trailing text accepted");
+  locales:
+    en:
+      name: "Strict ISO date parser"
+      system_prompt: ""
+      prompt: |
+        Write a JavaScript function parseDate(s). Accept only strings in the exact form YYYY-MM-DD (four digits, dash, two digits, dash, two digits) that represent a real calendar date, including leap-year rules for February. Return an object {year, month, day} with numbers, or null for anything else. Reply with only the code.
+    pt-BR:
+      name: "Parser estrito de data ISO"
+      system_prompt: ""
+      prompt: |
+        Escreva uma função JavaScript parseDate(s). Aceite apenas strings exatamente no formato YYYY-MM-DD (quatro dígitos, hífen, dois dígitos, hífen, dois dígitos) que representem uma data real do calendário, incluindo as regras de ano bissexto para fevereiro. Retorne um objeto {year, month, day} com números, ou null para qualquer outra coisa. Responda só com o código.

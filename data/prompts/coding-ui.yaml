@@ -1,0 +1,113 @@
+- id: snake-game-html5
+  category: coding-ui
+  eval_type: render_html
+  check:
+    type: html_complete
+    min_chars: 1500
+    must_contain: ["<canvas"]
+  locales:
+    en:
+      name: Snake Game in HTML5
+      system_prompt: You are a senior web developer. Return ONLY valid HTML code starting with <!DOCTYPE html>. Add NO markdown text before or after the code. The code must contain embedded CSS and JavaScript in a single file.
+      prompt: |
+        Create a fully functional Snake game. The canvas should have a dark background, the snake should be green, and the apple should be red. Add a score counter, canvas borders, and keyboard arrow controls.
+    pt-BR:
+      name: Snake Game (HTML5)
+      system_prompt: Você é um desenvolvedor web sênior. Retorne APENAS código HTML válido começando com <!DOCTYPE html>. Não adicione NENHUM texto em markdown antes ou depois do código. O código deve conter CSS e JavaScript embutidos em um único arquivo.
+      prompt: |
+        Crie um jogo da cobrinha (Snake) 100% funcional. O canvas deve ter um fundo escuro, a cobra verde e a maçã vermelha. Adicione placar, bordas no canvas e controle pelas setas do teclado.
+
+- id: pomodoro-timer
+  category: coding-ui
+  eval_type: render_html
+  check:
+    type: html_complete
+    min_chars: 1200
+    must_contain: ["<button"]
+  locales:
+    en:
+      name: Pomodoro Timer
+      system_prompt: You are a frontend developer expert in UI/UX. Return only valid HTML code without extra explanations.
+      prompt: |
+        Create a modern and beautiful Pomodoro Timer application using HTML, CSS, and JS. It should have Start, Pause, and Reset buttons, alternating between 25 minutes of focus and 5 minutes of rest. Center the interface on the screen using Flexbox or Grid.
+    pt-BR:
+      name: Timer Pomodoro
+      system_prompt: Você é um desenvolvedor frontend especialista em UI/UX. Retorne apenas código HTML válido, sem explicações extras.
+      prompt: |
+        Crie um aplicativo de Timer Pomodoro moderno e bonito usando HTML, CSS e JS. Ele deve ter botões de Iniciar, Pausar e Resetar, alternando entre 25 minutos de foco e 5 de descanso. Centralize a interface na tela usando Flexbox ou Grid.
+
+- id: todo-list-app
+  category: coding-ui
+  eval_type: render_html
+  check:
+    type: html_complete
+    min_chars: 1200
+    must_contain: ["<input", "<button"]
+  locales:
+    en:
+      name: To-do List App
+      system_prompt: You are a senior frontend developer. Return ONLY valid HTML code starting with <!DOCTYPE html>. Add NO markdown text before or after the code. CSS and JavaScript must be embedded in the single file.
+      prompt: |
+        Create a to-do list app. It needs a text input and an "Add" button, a list of tasks with a checkbox to mark each one done (strike-through when done), a delete button per task, and a counter of remaining tasks. Persist the tasks in localStorage so they survive a reload. Clean, modern styling.
+    pt-BR:
+      name: App de Lista de Tarefas
+      system_prompt: Você é um desenvolvedor frontend sênior. Retorne APENAS código HTML válido começando com <!DOCTYPE html>. Não adicione NENHUM texto em markdown antes ou depois do código. CSS e JavaScript devem estar embutidos no único arquivo.
+      prompt: |
+        Crie um app de lista de tarefas. Precisa de um campo de texto e um botão "Adicionar", uma lista de tarefas com checkbox para marcar cada uma como feita (riscada quando feita), um botão de excluir por tarefa e um contador de tarefas restantes. Persista as tarefas em localStorage para sobreviverem a um reload. Visual limpo e moderno.
+
+- id: calculator
+  category: coding-ui
+  eval_type: render_html
+  check:
+    type: html_complete
+    min_chars: 1500
+    must_contain: ["<button"]
+  locales:
+    en:
+      name: Calculator
+      system_prompt: You are a senior frontend developer. Return ONLY valid HTML code starting with <!DOCTYPE html>. Add NO markdown text before or after the code. CSS and JavaScript must be embedded in the single file.
+      prompt: |
+        Create a working calculator with a display and buttons for digits 0-9, decimal point, the four basic operations, equals, and clear. It must handle chained operations (e.g. 2 + 3 * 4 pressed in sequence) and division by zero without crashing. Do NOT use eval(). Lay the buttons out in a grid.
+    pt-BR:
+      name: Calculadora
+      system_prompt: Você é um desenvolvedor frontend sênior. Retorne APENAS código HTML válido começando com <!DOCTYPE html>. Não adicione NENHUM texto em markdown antes ou depois do código. CSS e JavaScript devem estar embutidos no único arquivo.
+      prompt: |
+        Crie uma calculadora funcional com um visor e botões para os dígitos 0-9, ponto decimal, as quatro operações básicas, igual e limpar. Ela deve lidar com operações encadeadas (ex.: 2 + 3 * 4 digitados em sequência) e divisão por zero sem quebrar. NÃO use eval(). Organize os botões em um grid.
+
+- id: responsive-pricing
+  category: coding-ui
+  eval_type: render_html
+  check:
+    type: html_complete
+    min_chars: 1500
+    must_contain: ["@media"]
+  locales:
+    en:
+      name: Responsive Pricing Page
+      system_prompt: You are a senior frontend developer with a strong eye for design. Return ONLY valid HTML code starting with <!DOCTYPE html>. Add NO markdown text before or after the code. CSS must be embedded in the single file.
+      prompt: |
+        Create a pricing section with three plans (Free, Pro, Team), each in a card with a title, price, a list of 4 features, and a call-to-action button. Highlight the Pro plan as recommended. The cards must sit side by side on wide screens and stack vertically on screens narrower than 700px, using a CSS media query. No JavaScript needed.
+    pt-BR:
+      name: Página de Preços Responsiva
+      system_prompt: Você é um desenvolvedor frontend sênior com bom olho para design. Retorne APENAS código HTML válido começando com <!DOCTYPE html>. Não adicione NENHUM texto em markdown antes ou depois do código. O CSS deve estar embutido no único arquivo.
+      prompt: |
+        Crie uma seção de preços com três planos (Grátis, Pro, Time), cada um em um card com título, preço, lista de 4 recursos e um botão de chamada para ação. Destaque o plano Pro como recomendado. Os cards devem ficar lado a lado em telas largas e empilhados verticalmente em telas com menos de 700px, usando media query de CSS. Não precisa de JavaScript.
+
+- id: analog-clock
+  category: coding-ui
+  eval_type: render_html
+  check:
+    type: html_complete
+    min_chars: 1000
+    must_contain: ["<canvas", "requestAnimationFrame"]
+  locales:
+    en:
+      name: Analog Clock on Canvas
+      system_prompt: You are a senior web developer. Return ONLY valid HTML code starting with <!DOCTYPE html>. Add NO markdown text before or after the code. CSS and JavaScript must be embedded in the single file.
+      prompt: |
+        Draw a working analog clock on a <canvas> that shows the current local time with hour, minute and second hands, 12 hour markers, and a circular face. Update it smoothly using requestAnimationFrame. Center the clock on the page over a dark background.
+    pt-BR:
+      name: Relógio Analógico em Canvas
+      system_prompt: Você é um desenvolvedor web sênior. Retorne APENAS código HTML válido começando com <!DOCTYPE html>. Não adicione NENHUM texto em markdown antes ou depois do código. CSS e JavaScript devem estar embutidos no único arquivo.
+      prompt: |
+        Desenhe um relógio analógico funcional em um <canvas> que mostre a hora local atual com ponteiros de hora, minuto e segundo, 12 marcadores de hora e um mostrador circular. Atualize suavemente usando requestAnimationFrame. Centralize o relógio na página sobre um fundo escuro.

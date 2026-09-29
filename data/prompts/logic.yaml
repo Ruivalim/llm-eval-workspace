@@ -1,0 +1,295 @@
+- id: sally-daughters
+  category: logic
+  eval_type: text
+  check:
+    type: final_number
+    expected: 4
+  locales:
+    en:
+      name: Sally's Daughters
+      system_prompt: You are an analytical assistant. Answer logically and explain your reasoning step by step.
+      prompt: |
+        Sally has 3 daughters. Each daughter has 1 brother. How many children does Sally have in total?
+
+        Think step by step, then reply with ONLY the final number on the last line.
+    pt-BR:
+      name: Filhas de Sally
+      system_prompt: Você é um assistente analítico. Responda de forma lógica e explique seu raciocínio passo a passo.
+      prompt: |
+        Sally tem 3 filhas. Cada filha tem 1 irmão. Quantos filhos Sally tem no total?
+
+        Pense passo a passo e depois responda com APENAS o número final na última linha.
+
+- id: killers-in-room
+  category: logic
+  eval_type: text
+  check:
+    type: final_number
+    expected: 3
+  locales:
+    en:
+      name: The Killer in the Room
+      system_prompt: You are a lateral thinker focused on literal accuracy.
+      prompt: |
+        There are 3 killers in a room. Someone enters the room and kills one of them. Nobody leaves the room. How many killers are left in the room?
+
+        Think step by step, then reply with ONLY the final number on the last line.
+    pt-BR:
+      name: O Assassino na Sala
+      system_prompt: Você é um pensador lateral focado em precisão literal.
+      prompt: |
+        Existem 3 assassinos em uma sala. Alguém entra na sala e mata um deles. Ninguém sai da sala. Quantos assassinos sobraram na sala?
+
+        Pense passo a passo e depois responda com APENAS o número final na última linha.
+
+- id: apples-state-tracking
+  category: logic
+  eval_type: text
+  check:
+    type: regex
+    pattern: "(?im)^final:\\s*(1|one)\\b.*\\bred\\b"
+  locales:
+    en:
+      name: The Apple State Problem
+      system_prompt: Track state changes with precision.
+      prompt: |
+        João has 5 apples. He puts 2 in a red box and 3 in a blue box. Then he takes 1 apple from the red box and eats it. After that, Maria takes the blue box and carries it away. How many apples does João have now and where are they?
+
+        Finish with a single last line in the format: Final: <number> apples, <location>
+    pt-BR:
+      name: Problema das Maçãs (Estado)
+      system_prompt: Acompanhe as mudanças de estado com precisão.
+      prompt: |
+        João tem 5 maçãs. Ele coloca 2 em uma caixa vermelha e 3 em uma caixa azul. Depois, ele tira 1 maçã da caixa vermelha e a come. Em seguida, Maria pega a caixa azul e leva embora. Quantas maçãs João tem agora e onde elas estão?
+
+        Termine com uma única última linha no formato exato em inglês: Final: <number> apples, <location>
+        (escreva essa linha final em inglês)
+
+- id: rounded-ledger
+  category: logic
+  eval_type: text
+  tags: [hard, arithmetic, rounding]
+  check:
+    type: final_number
+    expected: 143
+  locales:
+    en:
+      name: "Rounded ledger"
+      system_prompt: ""
+      prompt: |
+        Compute this ledger strictly in order. Start with 237 units:
+        1. Increase it by 19%, then round UP to a whole unit.
+        2. Deduct 58 units.
+        3. Halve the result, then round DOWN to a whole unit.
+        4. Add 47 units.
+        5. Apply a 10% discount. Round the discount itself to the nearest whole unit, with .5 rounding up, then subtract it.
+
+        Show reasoning if useful. Put only the final number on the last line.
+    pt-BR:
+      name: "Razão com arredondamento"
+      system_prompt: ""
+      prompt: |
+        Calcule este livro-caixa estritamente na ordem. Comece com 237 unidades:
+        1. Aumente 19% e então arredonde PARA CIMA para uma unidade inteira.
+        2. Subtraia 58 unidades.
+        3. Divida o resultado por dois e então arredonde PARA BAIXO para uma unidade inteira.
+        4. Some 47 unidades.
+        5. Aplique desconto de 10%. Arredonde o valor do desconto para a unidade inteira mais próxima, com .5 arredondando para cima, e então subtraia-o.
+
+        Mostre o raciocínio se ajudar. Coloque apenas o número final na última linha.
+
+- id: record-filter-json
+  category: logic
+  eval_type: text
+  tags: [hard, json, filtering]
+  check:
+    type: json_equals
+    expected:
+      ids: [r2, r5]
+      count: 2
+      score_total: 185
+  locales:
+    en:
+      name: "Constrained record filter"
+      system_prompt: ""
+      prompt: |
+        From these records, keep records that are active, have score at least 80, and have exactly two owners:
+
+        - {id: r1, active: true, score: 81, owners: [Ana]}
+        - {id: r2, active: true, score: 88, owners: [Bo, Cy]}
+        - {id: r3, active: false, score: 99, owners: [Di, Em]}
+        - {id: r4, active: true, score: 80, owners: [Fa, Gi, Hu]}
+        - {id: r5, active: true, score: 97, owners: [Io, Jo]}
+
+        Reply ONLY with JSON in this exact shape: {"ids":[...],"count":number,"score_total":number}. Keep ids in input order.
+    pt-BR:
+      name: "Filtro de registros"
+      system_prompt: ""
+      prompt: |
+        Destes registros, mantenha os que estão ativos, têm pontuação de pelo menos 80 e exatamente dois responsáveis:
+
+        - {id: r1, active: true, score: 81, owners: [Ana]}
+        - {id: r2, active: true, score: 88, owners: [Bo, Cy]}
+        - {id: r3, active: false, score: 99, owners: [Di, Em]}
+        - {id: r4, active: true, score: 80, owners: [Fa, Gi, Hu]}
+        - {id: r5, active: true, score: 97, owners: [Io, Jo]}
+
+        Responda SOMENTE com JSON neste formato exato: {"ids":[...],"count":number,"score_total":number}. Mantenha os ids na ordem de entrada.
+
+- id: code-count
+  category: logic
+  eval_type: text
+  tags: [hard, combinatorics]
+  check:
+    type: final_number
+    expected: 952
+  locales:
+    en:
+      name: "Constrained code count"
+      system_prompt: ""
+      prompt: |
+        How many four-digit decimal codes have no repeated digits, do not start with zero, and are divisible by 5? Explain if useful, then put only the final number on the last line.
+    pt-BR:
+      name: "Contagem de códigos"
+      system_prompt: ""
+      prompt: |
+        Quantos códigos decimais de quatro dígitos não repetem dígitos, não começam com zero e são divisíveis por 5? Explique se ajudar e coloque apenas o número final na última linha.
+
+- id: bat-and-ball
+  category: logic
+  eval_type: text
+  tags: [intuition-trap, arithmetic]
+  check:
+    type: final_number
+    expected: 5
+  locales:
+    en:
+      name: "Bat and ball"
+      system_prompt: ""
+      prompt: |
+        A bat and a ball cost 110 cents in total. The bat costs 100 cents more than the ball. How many cents does the ball cost?
+
+        Think step by step, then reply with ONLY the final number on the last line.
+    pt-BR:
+      name: "Taco e bola"
+      system_prompt: ""
+      prompt: |
+        Um taco e uma bola custam 110 centavos no total. O taco custa 100 centavos a mais que a bola. Quantos centavos custa a bola?
+
+        Pense passo a passo e depois responda com APENAS o número final na última linha.
+
+- id: weekday-100-days-ago
+  category: logic
+  eval_type: text
+  tags: [modular-arithmetic, calendar]
+  check:
+    type: regex
+    pattern: '(?im)^final:\s*monday\b'
+  locales:
+    en:
+      name: "Weekday 100 days ago"
+      system_prompt: ""
+      prompt: |
+        Today is Wednesday. What day of the week was it exactly 100 days ago?
+
+        Think step by step. Finish with a single last line in the format: Final: <weekday>
+    pt-BR:
+      name: "Dia da semana 100 dias atrás"
+      system_prompt: ""
+      prompt: |
+        Hoje é quarta-feira. Que dia da semana foi exatamente 100 dias atrás?
+
+        Pense passo a passo. Termine com uma única última linha no formato exato em inglês: Final: <weekday>
+        (escreva o nome do dia em inglês, por exemplo "Final: Friday")
+
+- id: count-letter-r
+  category: logic
+  eval_type: text
+  tags: [tokenizer-trap, counting]
+  check:
+    type: final_number
+    expected: 6
+  locales:
+    en:
+      name: "Count the letter r"
+      system_prompt: ""
+      prompt: |
+        How many times does the letter "r" appear in the phrase "strawberry raspberry"? Spell each word out letter by letter if it helps.
+
+        Reply with ONLY the final number on the last line.
+    pt-BR:
+      name: "Conte a letra r"
+      system_prompt: ""
+      prompt: |
+        Quantas vezes a letra "r" aparece na expressão "strawberry raspberry"? Soletre cada palavra letra por letra se ajudar.
+
+        Responda com APENAS o número final na última linha.
+
+- id: next-in-sequence
+  category: logic
+  eval_type: text
+  tags: [pattern, sequence]
+  check:
+    type: final_number
+    expected: 42
+  locales:
+    en:
+      name: "Next number in the sequence"
+      system_prompt: ""
+      prompt: |
+        What is the next number in this sequence: 2, 6, 12, 20, 30, ?
+
+        Explain the rule, then reply with ONLY the final number on the last line.
+    pt-BR:
+      name: "Próximo número da sequência"
+      system_prompt: ""
+      prompt: |
+        Qual é o próximo número desta sequência: 2, 6, 12, 20, 30, ?
+
+        Explique a regra e depois responda com APENAS o número final na última linha.
+
+- id: sister-age
+  category: logic
+  eval_type: text
+  tags: [intuition-trap, arithmetic]
+  check:
+    type: final_number
+    expected: 67
+  locales:
+    en:
+      name: "Sister's age"
+      system_prompt: ""
+      prompt: |
+        When I was 6 years old, my sister was half my age. Now I am 70. How old is my sister?
+
+        Think step by step, then reply with ONLY the final number on the last line.
+    pt-BR:
+      name: "Idade da irmã"
+      system_prompt: ""
+      prompt: |
+        Quando eu tinha 6 anos, minha irmã tinha metade da minha idade. Hoje eu tenho 70. Quantos anos tem minha irmã?
+
+        Pense passo a passo e depois responda com APENAS o número final na última linha.
+
+- id: height-ordering
+  category: logic
+  eval_type: text
+  tags: [transitive, ordering]
+  check:
+    type: regex
+    pattern: '(?im)^final:\s*cy\b'
+  locales:
+    en:
+      name: "Who is the shortest"
+      system_prompt: ""
+      prompt: |
+        Five friends compare heights. Ana is taller than Bo. Cy is shorter than Bo. Di is taller than Ana. Em is taller than Bo but shorter than Ana. Who is the shortest?
+
+        Think step by step. Finish with a single last line in the format: Final: <name>
+    pt-BR:
+      name: "Quem é o mais baixo"
+      system_prompt: ""
+      prompt: |
+        Cinco amigos comparam alturas. Ana é mais alta que Bo. Cy é mais baixo que Bo. Di é mais alta que Ana. Em é mais alto que Bo, mas mais baixo que Ana. Quem é o mais baixo?
+
+        Pense passo a passo. Termine com uma única última linha no formato exato: Final: <nome>

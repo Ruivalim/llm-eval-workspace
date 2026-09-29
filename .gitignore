@@ -1,0 +1,26 @@
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+
+# python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# runtime
+.env
+data/*.db
+data/*.db-*
+data/artifacts/
+data/traces/
+data/logs/
+
+# web
+web/node_modules/
+web/dist/
+.coverage

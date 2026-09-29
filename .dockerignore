@@ -1,0 +1,17 @@
+.git
+venv
+.venv
+**/__pycache__
+.pytest_cache
+.ruff_cache
+*.egg-info
+graft
+web/node_modules
+web/dist
+data/*.db*
+data/artifacts
+data/traces
+data/logs
+.env
+docs
+tests

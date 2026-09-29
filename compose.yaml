@@ -1,0 +1,35 @@
+# Sobe a bancada como vai pro ar: a imagem do Dockerfile, estado num volume.
+#   docker compose up -d --build
+#   http://127.0.0.1:8600
+#
+# A porta fica presa em 127.0.0.1 de propósito: a API não tem autenticação e
+# guarda chave de LLM. Expor na rede é decisão explícita (ver SECURITY.md).
+services:
+  llm-eval:
+    build: .
+    image: llm-eval-workspace:local
+    ports:
+      - "127.0.0.1:${PORT:-8600}:8600"
+    # Opcional: LLM_EVAL_DEFAULT_* semeia um servidor num banco novo e
+    # LLM_EVAL_ALLOW_CODE_EXEC=1 liga o js_harness. Os caminhos de estado vêm
+    # da imagem (/data) e não devem ser sobrescritos aqui.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      LLM_EVAL_DB: /data/llm_eval.db
+      LLM_EVAL_ARTIFACTS: /data/artifacts
+      LLM_EVAL_TRACES: /data/traces
+      LLM_EVAL_LOGS: /data/logs
+    volumes:
+      - llm-eval-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8600/api/servers', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  llm-eval-data:
